@@ -1,11 +1,21 @@
-import React from 'react'
+import { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import ProjectContainer from "../components/ProjectContainer/ProjectContainer";
 
 const ProjectPage = () => {
-    return (
-        <div>
+    const { projectId } = useParams()
+    const navigate = useNavigate()
 
-        </div>
-    )
+    useEffect(() => {
+        console.log(projectId)
+        if (!projectId || projectId === 'undefined') {
+            navigate('/', { relative: 'path' })
+        }
+    }, [projectId, navigate])
+
+    return <div>
+        { projectId && <ProjectContainer projectId={projectId} /> }
+    </div>
 }
 
 export default ProjectPage

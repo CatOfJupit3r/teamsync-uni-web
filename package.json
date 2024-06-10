@@ -1,49 +1,61 @@
 {
-  "name": "react-template-courses-ts",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.80",
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.19",
-    "@types/react-router-dom": "^5.3.3",
-    "axios": "^1.7.2",
-    "eslint": "^8.56.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "i18next-browser-languagedetector": "^7.2.0",
-    "jwt-decode": "^4.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4",
-    "wmr": "^3.8.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "react-template-courses-ts",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "axios": "^1.6.7",
+        "bcryptjs": "^2.4.3",
+        "blurhash": "^2.0.5",
+        "bootstrap": "^5.3.3",
+        "dotenv": "^16.4.5",
+        "i18next-browser-languagedetector": "^7.2.0",
+        "jwt-decode": "^4.0.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.22.0",
+        "react-scripts": "5.0.1",
+        "web-vitals": "^2.1.4",
+        "wmr": "^3.8.0"
+    },
+    "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        "@types/axios": "^0.14.0",
+        "@types/jest": "^27.5.2",
+        "@types/node": "^16.18.80",
+        "@types/react": "^18.2.55",
+        "@types/react-dom": "^18.2.19",
+        "@types/react-router-dom": "^5.3.3",
+        "@types/react-toggle": "^4.0.5",
+        "@types/socket.io-client": "^3.0.0",
+        "@typescript-eslint/eslint-plugin": "^7.3.1",
+        "@typescript-eslint/parser": "^7.3.1",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react": "^7.34.1",
+        "prettier": "3.2.5",
+        "prettier-plugin-organize-imports": "^3.2.4",
+        "ts-node": "^10.9.2",
+        "typescript": "^4.9.5"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }

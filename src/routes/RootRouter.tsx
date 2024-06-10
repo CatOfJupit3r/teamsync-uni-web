@@ -5,6 +5,7 @@ import LoginPage from '../pages/LoginPage'
 import SignUpPage from '../pages/SignUpPage'
 import HomePage from '../pages/HomePage'
 import ProjectPage from '../pages/ProjectPage'
+import NotFoundPage from "../pages/NotFoundPage";
 
 const RootRouter = () => {
     const { isLoggedIn } = useIsLoggedIn()
@@ -13,9 +14,9 @@ const RootRouter = () => {
             <Routes>
                 {isLoggedIn ? (
                     <>
-                        <Route path="/home" element={<HomePage />} />
+                        <Route index element={<HomePage />} />
                         <Route path="/project/:projectId" element={<ProjectPage />} />
-                        <Route path='*' element={<Navigate to="/home" />} />
+                        <Route path='*' element={<NotFoundPage />} />
                     </>
                     ): (
                     <>

@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios'
 
 import { REACT_APP_BACKEND_URL } from '../config'
+import { ProjectInfo } from '../models/APIModels'
 import AuthManager from './AuthManager'
 
 const errors = {
@@ -25,30 +26,35 @@ class APIService {
     }
 
     private fetch = async ({
-                               url,
-                               method,
-                               data,
-                               _retry,
-                           }: {
+        url,
+        method,
+        data,
+        _retry,
+        noAuth,
+    }: {
         url: string
         method: 'get' | 'post' | 'put' | 'delete'
         data?: {
             [_: string]: any
         }
         _retry?: boolean
+        noAuth?: boolean
     }): Promise<{ [key: string]: any }> => {
         console.log('Checking token expiration')
-        if (AuthManager.isAccessTokenExpired()) {
+        if (!noAuth && AuthManager.isAccessTokenExpired()) {
             console.log('Token is expired')
             await this.tryRefreshingTokenOrLogoutAndThrow()
         }
         try {
             console.log('Fetching the API...', url)
-            const result = await axios(url, {
+            const realUrl = url.startsWith('http') ? url : `http://${url}`
+            const result = await axios(realUrl, {
                 method,
-                headers: {
-                    ...(AuthManager.authHeader() || {}),
-                },
+                headers: !noAuth
+                    ? {
+                          ...(AuthManager.authHeader() || {}),
+                      }
+                    : {},
                 data,
             })
             console.log('Fetch succeeded', url)
@@ -122,32 +128,69 @@ class APIService {
     }
 
     public login = async (handle: string, password: string) => {
-        const response = await axios.post(this.endpoints.LOGIN, { handle, password })
-        const { accessToken, refreshToken } = response.data
+        // const response = await axios.post(this.endpoints.LOGIN, { handle, password })
+        const response = await this.fetch({
+            url: this.endpoints.LOGIN,
+            method: 'post',
+            data: { handle, password },
+            noAuth: true,
+        })
+        const { accessToken, refreshToken } = response
         AuthManager.login({ accessToken, refreshToken })
     }
 
-    public createAccount = async (handle: string, password: string) => {
-        await axios.post(this.endpoints.REGISTER, { handle, password })
+    public createAccount = async (handle: string, name: string, password: string) => {
+        await this.fetch({
+            url: this.endpoints.REGISTER,
+            method: 'post',
+            data: { handle, password, name },
+            noAuth: true,
+        })
         await this.login(handle, password)
     }
 
-    public joinProject = async (projectCode: string): Promise<{
+    public joinProject = async (
+        projectCode: string
+    ): Promise<{
         projectId: string
     }> => {
-        return await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/project/join?inviteCode=${projectCode}`,
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/project/join/`,
             method: 'post',
-        }) as { projectId: string }
+            data: { inviteCode: projectCode },
+        })) as { projectId: string }
     }
 
     public getJoinedProjects = async () => {
-        return await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/project/joined`,
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/project/`,
             method: 'get',
-        }) as Array<{ id: string, name: string }>
+        })) as Array<{
+            projectId: string
+            projectName: string
+            role: 'owner' | 'manager' | 'participant' | 'viewer'
+        }>
     }
 
+    public getProjectInfo = async (projectId: string) => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/project/${projectId}`,
+            method: 'get',
+        })) as ProjectInfo
+    }
+
+    public createTask = async (projectId: string, task: {
+        name: string
+        description: string
+        dueDate: string
+        assignee: string
+    }) => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/project/${projectId}/create_task`,
+            method: 'post',
+            data: task,
+        })) as { taskId: string }
+    }
 }
 
 export default new APIService()
