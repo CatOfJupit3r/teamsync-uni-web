@@ -4,7 +4,13 @@ import JoinProject from '../components/JoinProject'
 
 const HomePage = () => {
     return (
-        <div>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+            width: '50%',
+            margin: 'auto',
+        }}>
             <h1>Home Page</h1>
             <AvailableProjects />
             <JoinProject />

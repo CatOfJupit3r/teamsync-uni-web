@@ -26,8 +26,24 @@ const SignUp = () => {
     }, [username, password, name])
 
     return (
-        <div className={styles.crutch}>
-            <form onSubmit={handleSubmit}>
+        <div className={styles.crutch} style={{
+            border: '0.125rem solid #000',
+            borderRadius: '0.5rem',
+            borderBottom: '0.5rem solid #000',
+            padding: '0.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+            width: '50%',
+            margin: 'auto',
+        }}>
+            <h2>Sign Up</h2>
+            <form onSubmit={handleSubmit} style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.5rem',
+                width: '100%',
+            }}>
                 <label>
                     Username:
                     <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
