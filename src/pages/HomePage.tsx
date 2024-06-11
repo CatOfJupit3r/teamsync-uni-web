@@ -1,6 +1,7 @@
 import React from 'react'
 import AvailableProjects from '../components/AvailableProjects'
 import JoinProject from '../components/JoinProject'
+import AuthManager from '../services/AuthManager'
 
 const HomePage = () => {
     return (
@@ -14,6 +15,9 @@ const HomePage = () => {
             <h1>Home Page</h1>
             <AvailableProjects />
             <JoinProject />
+            <button onClick={() => {
+                AuthManager.logout()
+            }}>Logout</button>
         </div>
     )
 }
